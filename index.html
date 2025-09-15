@@ -1,1 +1,175 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth or Dare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .card {
+            background-color: #eee;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #question {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #truth-btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        #truth-btn:hover {
+            background-color: #218838;
+        }
+
+        #dare-btn {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        #dare-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Truth or Dare</h1>
+        <div class="card">
+            <p id="question">এখানে প্রশ্ন আসবে</p>
+        </div>
+        <div class="buttons">
+            <button id="truth-btn">Truth</button>
+            <button id="dare-btn">Dare</button>
+        </div>
+    </div>
+
+    <script>
+        const truthQuestions = [
+            "তোমার সবচেয়ে বড় ভয় কী?",
+            "এমন একটি গোপন কথা বলো যা তুমি কাউকে বলোনি।",
+            "তুমি যদি একটি সুপারপাওয়ার পেতে, সেটা কী হতো এবং কেন?",
+            "তোমার জীবনের সবচেয়ে বিব্রতকর মুহূর্তটি কী ছিল?",
+            "যদি তুমি পৃথিবীর যেকোনো জায়গায় যেতে পারতে, কোথায় যেতে এবং কেন?",
+            "কাউকে কি কোনো মিথ্যা বলেছিলে?",
+            "তোমার সবচেয়ে বড় স্বপ্ন কী?",
+            "তুমি কার উপর সবচেয়ে বেশি ক্রাশ খেয়েছিলে?",
+            "তোমার সবচেয়ে অপছন্দের অভ্যাস কী?",
+            "যদি তুমি একজন বিখ্যাত ব্যক্তি হতে, কাকে বেছে নিতে?",
+            "তোমার প্রথম ক্রাশ কে ছিল?",
+            "তোমার দেখা সবচেয়ে বাজে সিনেমা কোনটি?",
+            "তোমার সবচেয়ে পছন্দের খাবার কী?",
+            "যদি তুমি সময় ভ্রমণ করতে পারতে, কোথায় যেতে?",
+            "তোমার জীবনের সবচেয়ে বড় আফসোস কী?",
+            "তোমার সবচেয়ে পছন্দের স্মৃতি কী?",
+            "তোমার সবচেয়ে অপছন্দের কাজ কী?",
+            "যদি তুমি অন্য কারো জীবন ১ দিনের জন্য বাঁচতে পারতে, সেটা কার জীবন হতো?",
+            "তোমার দেখা সবচেয়ে মজার ভিডিও কোনটি?",
+            "এমন একটি জিনিস বলো যা তুমি খুব ভালো করে করতে পারো।",
+            "এমন একটি কথা বলো যা তুমি মনে করো তোমার বন্ধুরা জানে না।",
+            "তোমার জীবনের সবচেয়ে দুঃখের মুহূর্ত কী ছিল?",
+            "তুমি কি কখনও কোনো নিয়ম ভেঙেছো?",
+            "তোমার প্রিয় গান কোনটি?",
+            "তোমার জীবনের সবচেয়ে গুরুত্বপূর্ণ মানুষ কে?",
+            // আরো Truth প্রশ্ন যোগ করো...
+        ];
+
+        const dareQuestions = [
+            "পাশের বাড়ির লোকের দরজায় গিয়ে কড়া নাড়ো এবং দৌড়ে চলে আসো।",
+            "সামাজিক মাধ্যমে তোমার কোনো বন্ধুর একটি পোস্টে এমন একটি কমেন্ট করো যা সবাই হাসবে।",
+            "একটি আজেবাজে গান গাও এবং তার ভিডিও বানাও।",
+            "একটি ডিম ফাটিয়ে তোমার মাথায় ঢালো।",
+            "তোমার পরিবারের একজনকে জড়িয়ে ধরো এবং বলো তুমি তাকে ভালোবাসো।",
+            "একটি পেঁয়াজ কামড় দাও।",
+            "তোমার পায়ের আঙুল দিয়ে কিছু একটা আঁকো।",
+            "১০ সেকেন্ড ধরে হাসতে থাকো।",
+            "কোনো একটি বিখ্যাত মানুষের নকল করে কথা বলো।",
+            "কাউকে ফোন করে বলো যে তুমি একটি গোপন সংস্থার এজেন্ট।",
+            "তোমার ফোনে প্রথম যে ছবিটি আছে সেটি সবাইকে দেখাও।",
+            "১ মিনিটের জন্য হাঁটু গেড়ে বসে থাকো।",
+            "একটি বিড়ালের মত মিউ মিউ করো।",
+            "তোমার বাড়ির কাউকে একটি মজার জোকস বলো।",
+            "৫ সেকেন্ডের জন্য জিহ্বা বাইরে বের করে রাখো।",
+            "একটি অচেনা ব্যক্তির সঙ্গে গিয়ে হাই ফাইভ দাও।",
+            "তোমার সবচেয়ে প্রিয় গানটি নাচতে নাচতে গাও।",
+            "তোমার পরিবারের সাথে একটি মজার সেলফি তোলো।",
+            "একটি গান শোন এবং গানের লিরিক্স ভুলভাল করে বলো।",
+            "একটি কাগজ নাও এবং তার উপরে কিছু একটা আঁকো।",
+            "একটি ছোট গল্প বলো।",
+            "একটি মজার ভয়েস মেসেজ পাঠাও।",
+            "একটি মজার শ্লোক বলো।",
+            "একটি নতুন ভাষা শেখার চেষ্টা করো।",
+            "একটি পুরনো ছবি দেখো এবং তার সম্পর্কে কিছু বলো।",
+            "একটি মজার পোজ দাও এবং তার ছবি তোলো।",
+            // আরো Dare প্রশ্ন যোগ করো...
+        ];
+
+        const truthBtn = document.getElementById('truth-btn');
+        const dareBtn = document.getElementById('dare-btn');
+        const questionDisplay = document.getElementById('question');
+
+        function getRandomQuestion(questionsArray) {
+            const randomIndex = Math.floor(Math.random() * questionsArray.length);
+            return questionsArray[randomIndex];
+        }
+
+        truthBtn.addEventListener('click', () => {
+            const randomTruth = getRandomQuestion(truthQuestions);
+            questionDisplay.textContent = randomTruth;
+        });
+
+        dareBtn.addEventListener('click', () => {
+            const randomDare = getRandomQuestion(dareQuestions);
+            questionDisplay.textContent = randomDare;
+        });
+    </script>
+</body>
+</html>
+
 
