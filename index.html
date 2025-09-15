@@ -3,122 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎉 Truth or Dare 🎉</title>
+<title>✨ Truth or Dare Challenge ✨</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
+/* Import Poppins font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
 body {
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
-    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    background: #121212; /* Deep dark background */
+    color: #f0f0f0;
     text-align: center;
+    overflow: hidden;
+    position: relative;
 }
 
-@keyframes gradientBG {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
+/* Enhanced Background Gradient Animation */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1f005c, #5b0060, #870160, #ac255e, #ca485c, #e16b5c, #f39060, #ffb56b);
+    background-size: 800% 800%;
+    animation: gradientShift 25s ease infinite;
+    z-index: -1;
+    opacity: 0.8;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 100%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 0%; }
+    100% { background-position: 0% 50%; }
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    background: rgba(255, 255, 255, 0.08); /* More subtle glassmorphism */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    padding: 45px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5); /* Stronger shadow */
     width: 90%;
-    max-width: 600px;
-    transition: transform 0.3s ease;
+    max-width: 650px;
+    transform: perspective(1000px) rotateX(7deg); /* Slight 3D tilt */
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden; /* For particle effect */
 }
 
+.container::before { /* Border glow effect */
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(45deg, #ff007f, #00ffff, #ff00ff, #ffea00);
+    background-size: 400% 400%;
+    z-index: -1;
+    border-radius: 30px;
+    filter: blur(8px);
+    animation: borderGlow 10s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+
 .container:hover {
-    transform: translateY(-5px);
+    transform: perspective(1000px) rotateX(0deg) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.7);
 }
 
 h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 15px;
+    font-size: 3.5em;
+    font-weight: 800;
+    margin-bottom: 25px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+    color: #e6e6e6;
+    letter-spacing: 1.5px;
+    position: relative;
+    display: inline-block;
+}
+h1::after { /* Underline effect for title */
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 5px;
+    background: linear-gradient(90deg, #ff007f, #00ffff);
+    border-radius: 5px;
 }
 
+
 .card {
-    background: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    margin-top: 20px;
-    min-height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 45px 25px;
+    margin-top: 35px;
+    min-height: 180px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2em;
-    color: #444;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: #f5f5f5;
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.05), 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    line-height: 1.6;
+    perspective: 1000px;
+    position: relative; /* For the "new question" pop-up */
 }
 
 .card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+    transform: translateY(-8px) rotateX(3deg);
+    box-shadow: inset 0 0 25px rgba(255,255,255,0.08), 0 12px 30px rgba(0,0,0,0.5);
+}
+
+#question {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+#question.fade-out {
+    opacity: 0;
+    transform: scale(0.8);
+}
+#question.fade-in {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .buttons {
-    margin-top: 25px;
+    margin-top: 40px;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 30px;
 }
 
 button {
-    padding: 12px 25px;
+    padding: 16px 35px;
     border: none;
-    border-radius: 10px;
-    font-size: 1.1em;
+    border-radius: 50px;
+    font-size: 1.3em;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+button i {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+button::before { /* Hover glow effect */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.4s;
+    transform: skewX(-20deg);
+}
+
+button:hover::before {
+    left: 100%;
 }
 
 #truth-btn {
-    background-color: #28a745;
+    background-image: linear-gradient(45deg, #1abc9c, #16a085);
     color: #fff;
 }
 
 #truth-btn:hover {
-    background-color: #218838;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    background-image: linear-gradient(45deg, #16a085, #1abc9c);
+    transform: scale(1.15) translateY(-8px);
+    box-shadow: 0 12px 25px rgba(26, 188, 156, 0.5);
 }
 
 #dare-btn {
-    background-color: #dc3545;
+    background-image: linear-gradient(45deg, #e74c3c, #c0392b);
     color: #fff;
 }
 
 #dare-btn:hover {
-    background-color: #c82333;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    background-image: linear-gradient(45deg, #c0392b, #e74c3c);
+    transform: scale(1.15) translateY(-8px);
+    box-shadow: 0 12px 25px rgba(231, 76, 60, 0.5);
 }
 
-.emoji {
-    font-size: 1.5em;
-    margin-right: 8px;
+/* Particle effect */
+.particle {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    animation: particleAnimation 10s infinite;
+    z-index: -2;
 }
+
+@keyframes particleAnimation {
+    0% { transform: translate(0, 0) scale(0); opacity: 0; }
+    5% { opacity: 1; transform: scale(1); }
+    100% { transform: translate(var(--x), var(--y)) scale(var(--s)); opacity: 0; }
+}
+
+/* Question change animation */
+.question-animate-in {
+    animation: fadeInScale 0.5s ease forwards;
+}
+
+.question-animate-out {
+    animation: fadeOutScale 0.3s ease forwards;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOutScale {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.9); }
+}
+
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>🎲 Truth or Dare 🎲</h1>
+    <h1><span class="emoji">✨</span> Truth or Dare Challenge <span class="emoji">✨</span></h1>
     <div class="card">
         <p id="question">এখানে প্রশ্ন আসবে 🤔</p>
     </div>
     <div class="buttons">
-        <button id="truth-btn">🟢 Truth</button>
-        <button id="dare-btn">🔴 Dare</button>
+        <button id="truth-btn"><i class="fas fa-lightbulb"></i> Truth</button>
+        <button id="dare-btn"><i class="fas fa-exclamation-triangle"></i> Dare</button>
     </div>
 </div>
 
@@ -191,7 +338,7 @@ const truthQuestions = [
 "🥋 তুমি কি কখনও মার্শাল আর্ট শিখেছো?",
 "🛶 কোন জলক্রীড়া তুমি পছন্দ করো?",
 "🚣‍♂️ তুমি কি কখনও নৌকায় ভ্রমণ করেছো?",
-"🧗‍♂️ তুমি কি পাহাড়ে ওঠার চেষ্টা করেছো?",
+S"🧗‍♂️ তুমি কি পাহাড়ে ওঠার চেষ্টা করেছো?",
 "🎹 কোন বাদ্যযন্ত্র তুমি বাজাতে পারো?",
 "🖼️ প্রিয় শিল্পকর্ম কোনটি?",
 "📺 প্রিয় কার্টুন কোনটি?",
@@ -225,7 +372,7 @@ const truthQuestions = [
 "🤸‍♂️ প্রিয় জিম এক্সারসাইজ কোনটি?",
 "🧘‍♂️ তুমি কি কখনও যোগা করেছো?",
 "🚴‍♀️ তুমি কি কখনও সাইকেল রেস করেছো?",
-"🛹 তুমি কি কখনও স্কেটবোর্ডিং করেছো?",
+"🛹 তুমি কি কখনও স্ケートবোর্ডিং করেছো?",
 "🏄‍♂️ তুমি কি কখনও সার্ফিং করেছো?",
 "🪂 তুমি কি কখনও প্যারাশুটিং করেছো?",
 "🎤 প্রিয় গানটি কোনটি?",
@@ -295,13 +442,84 @@ function getRandomQuestion(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-truthBtn.addEventListener('click', () => {
-    questionDisplay.textContent = getRandomQuestion(truthQuestions);
+// Function to add a particle effect
+function createParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    document.body.appendChild(particle);
+
+    const size = Math.random() * 5 + 3; // Random size
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+
+    const randomX = (Math.random() - 0.5) * 200; // X displacement
+    const randomY = (Math.random() - 0.5) * 200; // Y displacement
+    const randomS = Math.random() * 0.5 + 0.5; // Scale
+
+    particle.style.setProperty('--x', `${randomX}px`);
+    particle.style.setProperty('--y', `${randomY}px`);
+    particle.style.setProperty('--s', `${randomS}`);
+
+    setTimeout(() => {
+        particle.remove();
+    }, 10000); // Remove after animation
+}
+
+// Event listener for button clicks
+function handleButtonClick(questionsArray) {
+    questionDisplay.classList.add('question-animate-out'); // Fade out current question
+
+    setTimeout(() => {
+        const newQuestion = getRandomQuestion(questionsArray);
+        questionDisplay.textContent = newQuestion;
+        questionDisplay.classList.remove('question-animate-out');
+        questionDisplay.classList.add('question-animate-in'); // Fade in new question
+
+        // Trigger particle effect from the button position
+        const buttonRect = event.target.getBoundingClientRect();
+        for (let i = 0; i < 10; i++) {
+            createParticle(
+                buttonRect.left + buttonRect.width / 2 + (Math.random() - 0.5) * 30,
+                buttonRect.top + buttonRect.height / 2 + (Math.random() - 0.5) * 30
+            );
+        }
+    }, 300); // Match this with fadeOutScale animation duration
+}
+
+truthBtn.addEventListener('click', () => handleButtonClick(truthQuestions));
+dareBtn.addEventListener('click', () => handleButtonClick(dareQuestions));
+
+// Initial question load
+document.addEventListener('DOMContentLoaded', () => {
+    questionDisplay.textContent = getRandomQuestion([...truthQuestions, ...dareQuestions]); // Show a random question initially
+    questionDisplay.classList.add('question-animate-in');
 });
 
-dareBtn.addEventListener('click', () => {
-    questionDisplay.textContent = getRandomQuestion(dareQuestions);
-});
+// Create random particles on background
+for (let i = 0; i < 50; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    document.body.appendChild(particle);
+
+    const size = Math.random() * 2 + 1;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${Math.random() * 100}vw`;
+    particle.style.top = `${Math.random() * 100}vh`;
+
+    const randomX = (Math.random() - 0.5) * window.innerWidth / 2;
+    const randomY = (Math.random() - 0.5) * window.innerHeight / 2;
+    const randomS = Math.random() * 0.5 + 0.5;
+    const randomDelay = Math.random() * 10;
+
+    particle.style.setProperty('--x', `${randomX}px`);
+    particle.style.setProperty('--y', `${randomY}px`);
+    particle.style.setProperty('--s', `${randomS}`);
+    particle.style.animationDelay = `${randomDelay}s`;
+    particle.style.animationDuration = `${10 + Math.random() * 10}s`;
+}
 </script>
 </body>
 </html>
